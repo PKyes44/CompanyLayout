@@ -6,27 +6,41 @@ gnbList.forEach((gnb, idx) => {
     let sub = document.createElement('div');
     sub.classList.add('sub');
 
-    for (let li = 0; li < 5; li++) {
-        let ul = document.createElement(`ul`);
+    const actvieList = [
+        (idx==0),
+        (idx==1),
+        (idx==2),
+        (idx==3),
+        (idx==4),
+    ];
 
-        if (idx == li) {
-            ul.classList.add('on');
-        } else {
-            
-        }
-        ul.innerHTML = `
-        <li ${idx == li ? 'class="focus"' : ''}>
-            <a href="#" ${idx == li ? '' : 'tabindex="-1"'}>${idx + 1}depth ${li+1}</a>
-        </li>
-        <li ${idx == li ? 'class="focus"' : ''}>
-            <a href="#" ${idx == li ? '' : 'tabindex="-1"'}>${idx + 1}depth ${li+1}</a>
-        </li>
-        <li ${idx == li ? 'class="focus"' : ''}>
-            <a href="#" ${idx == li ? '' : 'tabindex="-1"'}>${idx + 1}depth ${li+1}</a>
-        </li>`;
-        sub.append(ul);
-    }
-    wrap.append(sub);
+    wrap.innerHTML = `
+    <div class="sub">
+        <ul ${actvieList[0] ? 'class="on"' : ''}>
+            <li><a href="#" ${actvieList[0] ? '' : 'tabindex="-1"'}>Introduction</a></li>
+            <li><a href="#" ${actvieList[0] ? '' : 'tabindex="-1"'}>Missions</a></li>
+            <li><a href="#" ${actvieList[0] ? '' : 'tabindex="-1"'}ß>Archives</a></li>
+        </ul>
+        <ul ${actvieList[1] ? 'class="on"' : ''}>
+            <li><a href="#" ${actvieList[1] ? '' : 'tabindex="-1"'}>Members</a></li>
+            <li><a href="#" ${actvieList[1] ? '' : 'tabindex="-1"'}>Archives</a></li>
+            <li><a href="#" ${actvieList[1] ? '' : 'tabindex="-1"'}>Vision</a></li>
+        </ul>
+        <ul ${actvieList[2] ? 'class="on"' : ''}>
+            <li><a href="#" ${actvieList[2] ? '' : 'tabindex="-1"'}>Notion</a></li>
+            <li><a href="#" ${actvieList[2] ? '' : 'tabindex="-1"'}>Public</a></li>
+            <li><a href="#" ${actvieList[2] ? '' : 'tabindex="-1"'}>Events</a></li>
+        </ul>
+        <ul ${actvieList[3] ? 'class="on"' : ''}>
+            <li><a href="#" ${actvieList[3] ? '' : 'tabindex="-1"'}>Organizations</a></li>
+            <li><a href="#" ${actvieList[3] ? '' : 'tabindex="-1"'}>Event Gallery</a></li>
+        </ul>
+        <ul ${actvieList[4] ? 'class="on"' : ''}>
+            <li><a href="#" ${actvieList[4] ? '' : 'tabindex="-1"'}>Head Quarters</a></li>
+            <li><a href="#" ${actvieList[4] ? '' : 'tabindex="-1"'}>Branch</a></li>
+        </ul>
+    </div>`
+
     gnb.append(wrap);
 
     let subLiList = wrap.querySelectorAll('.sub ul li');
@@ -52,17 +66,15 @@ gnbList.forEach((gnb, idx) => {
         let wrap = e.currentTarget.querySelector('.wrap');
         wrap.classList.add('on');
     })
-
+    console.log(gnb.querySelector('a').textContent == "LOCATION");
     if (gnb.querySelector('a').textContent == "LOCATION") {
-        let liList = gnb.querySelectorAll('.on .focus');
+        let liList = gnb.querySelectorAll('#lastGNB .wrap .sub ul.on li');
+        console.log(liList);
         liList.forEach((li, idx) => {
-            if (idx == 2) {
+            if (idx == liList.length - 1) {
+                console.log(li);
                 li.addEventListener('focusout', (e) => {
-                    let wrapList = document.querySelectorAll('.wrap');
-                    wrapList.forEach(element => {
-                        element.classList.remove('on');
-                    })
-                    
+                    console.log('LOCATION last gnb is Focus out');
                     let wrap = e.currentTarget.closest('.wrap');
                     wrap.classList.remove('on');
                 })
